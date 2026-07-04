@@ -182,6 +182,36 @@
     });
   }
 
+  /* ---------- mobile menu (burger) ---------- */
+  var burger = document.querySelector('.burger');
+  var navEl = document.getElementById('nav');
+  function setMenu(open) {
+    if (!navEl || !burger) return;
+    navEl.classList.toggle('menu-open', open);
+    burger.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  function closeMenu() { setMenu(false); }
+  if (burger && navEl) {
+    burger.setAttribute('aria-expanded', 'false');
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setMenu(!navEl.classList.contains('menu-open'));
+    });
+    /* close after tapping a real navigation link (but not the Programs parent
+       that only expands its sub-menu) */
+    navEl.addEventListener('click', function (e) {
+      var a = e.target.closest('.nav-links a');
+      if (a && a.getAttribute('href') && a.getAttribute('href').charAt(0) !== '#') closeMenu();
+    });
+    document.addEventListener('click', function (e) {
+      if (navEl.classList.contains('menu-open') && !navEl.contains(e.target)) closeMenu();
+    });
+    addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    addEventListener('resize', function () { if (innerWidth > 1200) closeMenu(); }, { passive: true });
+  }
+
   /* skip-link target: first content screen */
   var firstScreen = document.querySelector('.screen, main, section');
   if (firstScreen && !document.getElementById('ih-main')) {

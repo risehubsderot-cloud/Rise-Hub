@@ -77,7 +77,16 @@ h2.headline .accent{color:var(--teal-deep)}
 .person .meta{margin-top:14px;padding:0 6px}
 .person .name{font-family:'Manrope';font-weight:800;font-size:16px;letter-spacing:-.012em;color:var(--ink-dark);line-height:1.22}
 .person .role{margin-top:5px;font-size:12px;color:var(--ink-mid);font-weight:500;line-height:1.4}
-@media (max-width:600px){section{padding:80px 6vw}}
+@media (max-width:640px){
+  section{padding:80px 6vw}
+  /* the 3-tab switcher is too wide for a phone — let it shrink and scroll
+     horizontally instead of being clipped off the edge */
+  .team-tabs{max-width:100%;width:auto;justify-content:flex-start;overflow-x:auto;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .team-tabs::-webkit-scrollbar{display:none}
+  .team-tab{padding:11px 16px;font-size:11.5px;letter-spacing:.6px;white-space:nowrap}
+  .team-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:28px 16px}
+}
 </style>
 </head>
 <body>
