@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Programs · Innovation Hub</title>
+<meta name="description" content="Four program tracks — the Resilience Accelerator for founders, Sheba to Sderot clinical innovation, Immediate Implementation for residents, and the MEITAL skills program.">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RISE.HUB — Resilience & Health Innovation Hub">
+<meta property="og:title" content="Programs · Innovation Hub">
+<meta property="og:description" content="Four program tracks — acceleration for founders, clinical innovation, deployment for residents, and skills for the next generation.">
+<meta property="og:image" content="../assets/logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#051221">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/shell.css">
+<style>
+/* Give each section iframe a first-paint height close to its real content, so the
+   page doesn't visibly jump when the height bus measures and corrects it after
+   load — most noticeable on the hero right after the page fade-in. The bridge
+   still applies each section's exact height once it reports. */
+#programs-hero iframe{height:615px}
+#accelerator  iframe{height:950px}
+#sheba        iframe{height:890px}
+#immediate    iframe{height:850px}
+#meital       iframe{height:950px}
+#programs-cta iframe{height:400px}
+@media(max-width:1100px){#programs-hero iframe{height:600px}}
+@media(max-width:900px){#programs-hero iframe{height:585px}}
+@media(max-width:600px){#programs-hero iframe{height:600px}}
+</style>
+</head>
+<body>
+
+<!-- SCREENS — first-paint heights come from the <style> above; the height bus
+     below then sets each section's exact measured height -->
+<div class="screen dark" id="programs-hero">
+  <iframe data-id="programs-hero" src="01-hero.html" title="Programs Hero" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="accelerator">
+  <iframe data-id="accelerator" loading="lazy" src="02-accelerator.html" title="Resilience Accelerator" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="sheba">
+  <iframe data-id="sheba" loading="lazy" src="03-sheba.html" title="Sheba to Sderot" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="immediate">
+  <iframe data-id="immediate" loading="lazy" src="04-immediate.html" title="Immediate Implementation" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="meital">
+  <iframe data-id="meital" loading="lazy" src="05-meital.html" title="MEITAL Program" scrolling="no"></iframe>
+</div>
+
+<div class="screen dark" id="programs-cta">
+  <iframe data-id="programs-cta" loading="lazy" src="06-cta.html" title="Join Us" scrolling="no"></iframe>
+</div>
+
+<script>
+/* These sections self-report height with {riseScreen:true,h} instead of
+   the shell's ih:h bus, so bridge that protocol here. Runs BEFORE shell.js
+   so no early report is lost while that file is still loading. A frame can
+   still finish loading before this listener exists (or while the tab is
+   hidden, where ResizeObserver is paused), so also measure same-origin
+   frames directly on their load event as a fallback. */
+(function(){
+  var frames = [].slice.call(document.querySelectorAll('.screen iframe'));
+  addEventListener('message', function(e){
+    if (!e.data || !e.data.riseScreen) return;
+    frames.forEach(function(f){
+      if (f.contentWindow === e.source) f.style.height = e.data.h + 'px';
+    });
+  });
+  function measure(f){
+    try{
+      var d = f.contentDocument;
+      if (!d || d.readyState !== 'complete') return;
+      var h = d.body.scrollHeight; // body, not documentElement: documentElement never reports less than the iframe's own height, so a short section would stay stuck tall
+      if (h > 60) f.style.height = h + 'px';
+    }catch(e){} /* cross-origin (file://) — the message bus handles it */
+  }
+  frames.forEach(function(f){
+    f.addEventListener('load', function(){ measure(f); });
+    measure(f);
+  });
+})();
+</script>
+<script>
+window.IH_PAGE = {
+  base: '../',
+  active: 'programs',
+  sections: [
+    {id:'programs-hero',label:'Programs'},
+    {id:'accelerator',label:'Accelerator'},
+    {id:'sheba',label:'Sheba to Sderot'},
+    {id:'immediate',label:'Immediate Implementation'},
+    {id:'meital',label:'MEITAL'},
+    {id:'programs-cta',label:'Join Us'}
+  ],
+  darkIds: ['programs-hero','programs-cta']
+};
+</script>
+<script src="../shared/i18n.js"></script>
+<script src="../shared/shell.js"></script>
+</body>
+</html>
