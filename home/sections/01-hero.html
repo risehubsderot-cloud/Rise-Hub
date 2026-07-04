@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="../../assets/field-poster.jpg">
 <style>
 :root{
   --bg-0:#051221;--bg-1:#0a1c2e;--bg-2:#112c47;--bg-3:#1c446c;
@@ -43,15 +44,15 @@ body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!impo
 /* content band tuned so on a ~1920px screen the copy starts ~175px from the left
    and the globe ends ~175px from the right — spread out, but not edge-hugging */
 .hero-grid{position:relative;z-index:5;height:100%;max-width:1720px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;padding:64px clamp(20px,4vw,75px);gap:clamp(30px,4vw,64px)}
-.hero-copy{max-width:580px}
-.hero h1{font-family:'Manrope';font-weight:800;font-size:clamp(34px,4.2vw,60px);line-height:1.05;letter-spacing:-.02em}
+.hero-copy{max-width:600px}
+.hero h1{font-family:'Manrope';font-weight:800;font-size:clamp(34px,4vw,68px);line-height:1.04;letter-spacing:-.02em}
 .hero h1 .b{color:var(--teal-2)}
-.hero .lead{margin-top:18px;color:var(--ink-2);font-size:15.5px;line-height:1.65;max-width:480px}
+.hero .lead{margin-top:18px;color:var(--ink-2);font-size:16px;line-height:1.62;max-width:500px}
 .hero .lead + .lead{margin-top:10px;color:var(--dim);font-size:14.5px}
 .hero .cta-row{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
 /* globe sits at the END of its column so its right margin mirrors the copy's left margin */
 .hero-visual{position:relative;height:100%;display:grid;place-items:center end}
-.globe-stage{position:relative;width:min(540px,37vw);aspect-ratio:1;filter:drop-shadow(0 30px 70px rgba(31,93,160,.4))}
+.globe-stage{position:relative;width:min(560px,39vw);aspect-ratio:1;filter:drop-shadow(0 30px 70px rgba(31,93,160,.4))}
 .globe-stage::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle, rgba(31,93,160,.45), rgba(138,91,255,.18) 45%, transparent 70%);filter:blur(22px);animation:hero-halo 5s ease-in-out infinite;z-index:1}
 @keyframes hero-halo{0%,100%{opacity:.85}50%{opacity:1}}
 .globe-svg{position:relative;z-index:2;width:100%;height:100%}
@@ -70,10 +71,58 @@ body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!impo
   .hero-grid{grid-template-columns:1fr;padding:110px var(--pad) 60px}
   .hero-visual{display:none}
 }
+
+/* ── HERO BACKGROUND SLIDESHOW + BRAND-BLUE VEIL ──────────────────
+   Three photos cross-fade slowly behind the copy (place → work →
+   community). A brand-blue veil, darker on the text side, keeps the
+   heading readable. The old rotating globe is replaced by this. */
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg .slide{position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:0;transform:scale(1.06);will-change:opacity,transform;
+  animation:heroFade 24s ease-in-out infinite, heroKen 24s ease-in-out infinite}
+.hero-bg .slide:nth-child(1){background-image:url('../../assets/field-poster.jpg')}
+.hero-bg .slide:nth-child(2){background-image:url('../../assets/photos/workshop.jpg');animation-delay:-8s,-8s}
+.hero-bg .slide:nth-child(3){background-image:url('../../assets/photos/web-youth.jpg');animation-delay:-16s,-16s}
+@keyframes heroFade{0%{opacity:0}4%{opacity:1}29%{opacity:1}37%{opacity:0}100%{opacity:0}}
+@keyframes heroKen{0%{transform:scale(1.05)}37%{transform:scale(1.12)}100%{transform:scale(1.12)}}
+/* Veil shape: dark on the text side (legibility) and a soft dark pool behind
+   the globe (so it separates from the photo), with the photo showing — muted —
+   in the middle. Keeps contrast gentle so text, globe and image sit together. */
+/* Three stacked layers (top→bottom): a dark pool behind the globe, a
+   text-side/edge darkening, and a saturated brand-blue wash over the WHOLE
+   image so it reads as a real blue filter (not just a darkening). */
+.hero-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(880px 880px at 82% 46%, rgba(5,18,33,.88) 0%, rgba(6,32,54,.4) 44%, transparent 72%),
+    linear-gradient(to right, rgba(5,18,33,.95) 0%, rgba(5,18,33,.66) 30%, rgba(6,28,50,.14) 52%, rgba(6,28,50,.14) 64%, rgba(5,18,33,.5) 100%),
+    linear-gradient(rgba(0,84,138,.5), rgba(0,52,92,.56))}
+html[dir=rtl] .hero-veil{
+  background:
+    radial-gradient(880px 880px at 18% 46%, rgba(5,18,33,.88) 0%, rgba(6,32,54,.4) 44%, transparent 72%),
+    linear-gradient(to left, rgba(5,18,33,.95) 0%, rgba(5,18,33,.66) 30%, rgba(6,28,50,.14) 52%, rgba(6,28,50,.14) 64%, rgba(5,18,33,.5) 100%),
+    linear-gradient(rgba(0,84,138,.5), rgba(0,52,92,.56))}
+@media (max-width:900px){
+  /* on phones the copy sits over the whole image: darken top-to-bottom, plus
+     the same brand-blue wash */
+  .hero-veil,html[dir=rtl] .hero-veil{
+    background:
+      linear-gradient(to bottom, rgba(5,18,33,.8), rgba(6,28,50,.42) 45%, rgba(5,18,33,.9)),
+      linear-gradient(rgba(0,84,138,.5), rgba(0,52,92,.56))}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-bg .slide{animation:none}
+  .hero-bg .slide:nth-child(1){opacity:1}
+}
 </style>
 </head>
 <body>
 <header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="hero-veil"></div>
+  </div>
   <div class="hero-grid">
     <div class="hero-copy">
       <h1 data-he-html="מ<span class=&quot;b&quot;>חוסן</span> לחדשנות גלובלית">From <span class="b">Resilience</span> to Global Innovation</h1>
