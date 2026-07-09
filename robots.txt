@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rise-hub-nine.vercel.app/sitemap.xml
