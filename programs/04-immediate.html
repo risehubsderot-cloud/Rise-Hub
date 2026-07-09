@@ -218,6 +218,19 @@ img{display:block;max-width:100%}
   .screen{padding:80px 0}
   .page-hero{padding:150px 0 70px}
 }
+@media(max-width:600px){
+  .wrap{padding:0 20px}
+  .screen{padding:56px 0}
+  .page-hero{padding:108px 0 56px}
+  .page-hero h1{font-size:clamp(28px,7.4vw,36px);margin-bottom:18px}
+  .page-hero .lede{font-size:16px}
+  .v-point{gap:14px;padding:20px 0}
+  .v-point p{font-size:15px}
+  .sec-foot{margin-top:36px;gap:16px}
+}
+@media(max-width:400px){
+  .explore{width:100%;justify-content:center}
+}
 
 </style>
 <style>
@@ -230,6 +243,7 @@ img{display:block;max-width:100%}
   .prog-media img{width:100%;aspect-ratio:4/4.8;object-fit:cover;object-position:65% center;filter:saturate(1)}
   .prog-media .photo-bubble{position:absolute;top:30px;left:50%;transform:translateX(-50%)}
   @media(max-width:960px){.prog-grid{grid-template-columns:1fr;gap:48px}}
+  @media(max-width:600px){.prog-grid{gap:32px}.prog-tag{flex-wrap:wrap}}
 </style>
 </head>
 <body class="theme-light">
@@ -251,7 +265,7 @@ img{display:block;max-width:100%}
       </div>
     </div>
     <div class="prog-media reveal reveal-d1">
-      <div class="capsule"><img src="../assets/programs/immediate-planning.jpg" alt="A team planning an implementation" data-he-alt="צוות מתכנן הטמעה"></div>
+      <div class="capsule"><img src="../assets/photos/mentoring-session.avif" alt="A team working on an implementation at the hub" data-he-alt="צוות עובד על הטמעה במרכז"></div>
     </div>
   </div>
 </section>

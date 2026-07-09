@@ -89,6 +89,7 @@
         topLink('events', 'Events', 'אירועים', 'events/index.html') +
         topLink('updates', 'Updates', 'עדכונים', 'updates/index.html') +
         topLink('ecosystem', 'Ecosystem', 'אקוסיסטם', 'ecosystem/index.html') +
+        '<li class="nav-cta-li"><button type="button" data-action="open-modal" data-he="צרו קשר">Contact Us</button></li>' +
       '</ul>' +
       '<div class="tools">' +
         '<button class="lang" id="langBtn" aria-label="Switch to Hebrew" title="Switch to Hebrew">עב</button>' +
@@ -289,7 +290,7 @@
 
   /* ---------- modal ---------- */
   var modal = document.getElementById('modal');
-  function openModal() { modal.classList.add('open'); document.body.classList.add('no-scroll'); }
+  function openModal() { closeMenu(); modal.classList.add('open'); document.body.classList.add('no-scroll'); }
   function closeModal() { modal.classList.remove('open'); document.body.classList.remove('no-scroll'); }
   document.querySelectorAll('[data-action="open-modal"]').forEach(function (b) { b.addEventListener('click', openModal); });
   document.querySelectorAll('[data-action="close-modal"]').forEach(function (b) { b.addEventListener('click', closeModal); });

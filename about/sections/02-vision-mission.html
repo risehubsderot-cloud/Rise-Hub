@@ -51,6 +51,17 @@ h2 .accent{color:var(--teal-deep)}
   .grid{grid-template-columns:1fr;gap:36px}
   .context-box{grid-template-columns:1fr;gap:24px;padding:30px}
 }
+@media (max-width:600px){
+  section{padding:56px var(--pad)}
+  .section-head{margin-bottom:34px}
+  .lead-quote{font-size:clamp(19px,5.4vw,23px);margin-bottom:22px}
+  /* pull the decorative quote mark in so it never overflows the viewport
+     (desktop left:-45px would spill past the tight mobile gutter) */
+  .lead-quote::before{left:-6px;top:-6px;font-size:54px}
+  .card{padding:22px;gap:16px}
+  .context-box{padding:26px 22px;margin-top:28px}
+  .context-text{font-size:15px}
+}
 </style>
 </head>
 <body>

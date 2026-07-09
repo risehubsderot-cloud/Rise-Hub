@@ -47,6 +47,13 @@ h1 .gradient{background:linear-gradient(120deg, var(--teal-2), #a8f3ee);-webkit-
   .content{grid-template-columns:1fr}
   .hero-photo{display:none}
 }
+@media (max-width:600px){
+  /* keep min-height:100vh so the hero stays a clean full-screen block
+     (parent iframe keeps its 100vh floor); just tighten spacing + type */
+  section{padding-top:88px;padding-bottom:52px}
+  h1{font-size:clamp(30px,7.6vw,40px);margin-bottom:18px}
+  .text-lead p{font-size:15px}
+}
 </style>
 </head>
 <body>

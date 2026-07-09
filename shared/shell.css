@@ -39,13 +39,14 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .skip-link:focus{top:0}
 
 /* ── NAV ── */
-.nav{position:fixed;top:0;left:0;right:0;z-index:80;height:64px;display:flex;align-items:center;gap:22px;padding:0 clamp(20px,4vw,40px);background:rgba(5,18,33,.30);border-bottom:1px solid var(--line);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);transition:background .3s, border-color .3s, height .3s, box-shadow .3s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:80;height:64px;display:flex;align-items:center;gap:22px;padding:0 clamp(20px,4vw,40px);background:rgba(5,18,33,.30);border-bottom:1px solid var(--line);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);transition:background .3s, border-color .3s, height .3s, box-shadow .3s;transform:translateZ(0);will-change:transform;isolation:isolate}
 .nav.scrolled{background:rgba(5,18,33,.72);border-bottom-color:rgba(56,182,255,.18);height:56px;box-shadow:0 18px 40px -26px rgba(0,0,0,.55)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16.5px;color:#fff}
 .brand img{height:32px;filter:drop-shadow(0 4px 10px rgba(31,93,160,.55))}
 .brand span{white-space:nowrap}
 .nav-links{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--ink-2);font-weight:500;list-style:none}
 .nav-links > li{position:relative}
+.nav-cta-li{display:none}/* Contact lives in the top-bar CTA on desktop/tablet; only surfaces inside the mobile menu */
 .nav-links > li > a{padding:6px 0;opacity:.88;transition:.2s;display:inline-flex;align-items:center;gap:6px;cursor:pointer;position:relative}
 .nav-links > li > a:hover, .nav-links > li > a.active{opacity:1;color:var(--teal-2)}
 .nav-links > li > a::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal-2));transform:scaleX(0);transform-origin:right;transition:transform .3s ease}
@@ -119,6 +120,10 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 @media (max-width:1200px){
   .nav-links{display:none}
   .burger{display:flex}
+  /* nav-links (which carried margin-left:auto) is now hidden, so push the
+     action cluster to the far end itself — logical margin so it hugs the
+     left edge in LTR and the left edge (start=right) correctly in RTL */
+  .tools{margin-inline-start:auto}
   /* burger → X when the mobile menu is open */
   .burger.is-open span{background:transparent}
   .burger.is-open span::before{top:0;transform:rotate(45deg)}
@@ -142,6 +147,14 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
     border-bottom:1px solid var(--line);justify-content:space-between;
   }
   .nav.menu-open .nav-links > li > a::after{display:none}
+  /* Contact CTA inside the mobile menu — full-width, brand-filled, no divider */
+  .nav.menu-open .nav-cta-li{margin-top:14px}
+  .nav.menu-open .nav-cta-li > button{
+    width:100%;min-height:48px;padding:14px 18px;border-radius:12px;
+    background:var(--teal);color:#fff;font-weight:700;font-size:15.5px;
+    text-align:center;justify-content:center;
+  }
+  .nav.menu-open .nav-cta-li > button:hover{background:var(--teal-2);color:#051221}
   /* Programs sub-menu: shown expanded inline instead of a hover pop-over */
   .nav.menu-open .menu{
     position:static;transform:none;opacity:1;visibility:visible;
@@ -153,8 +166,27 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 }
 @media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
 @media (max-width:600px){
-  .foot-grid{grid-template-columns:1fr}
+  /* compact footer: brand full-width on top, the two short link lists
+     side-by-side, and the wider Contact column full-width below — halves
+     the footer height vs. a single stacked column */
+  .foot-grid{grid-template-columns:1fr 1fr;gap:26px 20px;padding-bottom:28px}
+  .foot-grid > div:first-child{grid-column:1 / -1}
+  .foot-col:last-child{grid-column:1 / -1}
+  .foot-about{max-width:none}
+  .social{margin-top:16px}
+  .foot-col h5{margin-bottom:12px}
+  .foot-col a{padding:5px 0}
   .modal-card{padding:32px 24px}
-  /* keep the top bar uncluttered on small phones — Contact lives in the menu area */
+  .modal-card .row{flex-direction:column}
+  .modal-card .btn-primary,.modal-card .ghost-btn{width:100%}
+  /* keep the top bar uncluttered on small phones — Contact moves into the menu */
+  .nav{gap:10px;padding:0 16px}
   .brand span{font-size:15px}
+  .brand img{height:28px}
+  .cta-nav{display:none}
+  .nav.menu-open .nav-cta-li{display:block}
+  /* comfortable touch targets on phones (min 44px) */
+  .lang{height:44px;min-width:44px;padding:0 13px}
+  .burger{width:44px;height:44px}
+  .footer{padding:48px var(--pad) 26px}
 }

@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ecosystem — Intro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 :root{
   --bg-0:#051221;--bg-1:#0a1c2e;--bg-2:#112c47;
@@ -46,6 +46,13 @@ h1 .gradient{background:linear-gradient(120deg, var(--teal-2), #a8f3ee);-webkit-
   .grid{grid-template-columns:1fr;gap:40px}
   section{padding-top:100px;padding-bottom:48px}
 }
+@media (max-width:600px){
+  :root{--pad:20px}
+  section{padding:88px var(--pad) 56px}
+  .grid{gap:26px;margin-top:24px}
+  .summary-card{padding:24px}
+  .summary-card p{font-size:15px}
+}
 </style>
 </head>
 <body>
@@ -59,9 +66,7 @@ h1 .gradient{background:linear-gradient(120deg, var(--teal-2), #a8f3ee);-webkit-
         <br>
         <p data-he="מסטארט-אפים בשלבים מוקדמים ועד לפריסה במגוון אתרים, אנחנו מחברים יזמים עם המרכזים הרפואיים, המשאבים המוניציפליים והשותפים שהופכים תובנות מהשטח לטכנולוגיה עובדת.">From early-stage startups to multi-site deployments, we connect founders with the medical centers, municipal resources and partners that turn frontline insight into working technology.</p>
       </div>
-      <div class="summary-card reveal d2">
-        <p data-he="המרכז נשען על המרכז הרפואי שיבא, עיריית שדרות, המכללה האקדמית ספיר וקרן שדרות — עם רשת שותפים המשתרעת על פני תחומי הבריאות, הממשל, הפילנתרופיה והתעשייה.">The hub is anchored by Sheba Medical Center, the Sderot Municipality, Sapir Academic College and the Sderot Foundation — with a partner network spanning healthcare, government, philanthropy and industry.</p>
-      </div>
+      
     </div>
   </div>
 </section>

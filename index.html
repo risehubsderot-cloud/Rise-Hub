@@ -67,7 +67,7 @@
 .partners-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--teal-deep);font-weight:800}
 .partners-strip{max-width:1680px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 50px -32px rgba(13,36,54,.35);border:1px solid rgba(13,36,54,.06);padding:18px 0}
 .partners-viewport{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)}
-.partners-track{display:flex;align-items:center;gap:10px;width:max-content;animation:partners-scroll 80s linear infinite}
+.partners-track{display:flex;align-items:center;gap:10px;width:max-content;animation:partners-scroll 80s linear infinite;will-change:transform}
 .partners-track:hover{animation-play-state:paused}
 @keyframes partners-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .partner-logo{flex:0 0 auto;width:168px;height:58px;display:flex;align-items:center;justify-content:center;padding:0 16px}
@@ -75,6 +75,18 @@
 .partner-logo:hover img{transform:scale(1.08)}
 .partner-logo.on-dark{height:54px;background:#000;border-radius:9px;padding:0 18px}
 body.reduce-motion .partners-track{animation:none}
+
+@media (max-width:600px){
+  /* video/bridge: keep the film responsive and text comfortable */
+  .bridge-head h2{font-size:clamp(23px,6.2vw,30px)}
+  .video-play .play-icon{width:64px;height:64px}
+  /* partner marquee: smaller logos so more fit per screen, still contained */
+  .partners-strip{padding:14px 0}
+  .partners-track{gap:6px}
+  .partner-logo{width:120px;height:48px;padding:0 12px}
+  .partner-logo img{max-height:34px}
+  .partner-logo.on-dark{height:44px;padding:0 12px}
+}
 </style>
 </head>
 <body>

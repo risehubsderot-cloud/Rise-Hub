@@ -1,11 +1,81 @@
 {
   "items": [
     {
-      "source": "",
-      "title": "",
-      "tag": "",
+      "source": "Calcalist",
+      "title": "מסיוע בשינה ועד עזרה נפשית ראשונה: מאיץ הסטארט־אפים משדרות שבונה חוסן",
+      "date": "Oct 2025",
+      "image": "assets/press/calcalist.jpg",
+      "url": "https://www.calcalist.co.il/calcalistech/article/bjpzdh0nee"
+    },
+    {
+      "source": "The Jerusalem Post",
+      "title": "Lydia: A lifeline for PTSD sufferers and their families",
+      "date": "Jul 2025",
+      "image": "assets/press/jpost-lydia.jpg",
+      "url": "https://www.jpost.com/health-and-wellness/mind-and-spirit/article-859820"
+    },
+    {
+      "source": "The Jerusalem Post",
+      "title": "Innovation and investment: Israel's path to national resilience",
+      "date": "Jun 2025",
+      "image": "assets/press/jpost-opinion.jpg",
+      "url": "https://www.jpost.com/opinion/article-858049"
+    },
+    {
+      "source": "PC",
+      "title": "לא רק תל אביב: חממת החדשנות הבאה נולדת בשדרות",
+      "date": "Jul 2025",
+      "image": "assets/press/pc-meital.jpg",
+      "url": "https://www.pc.co.il/featured/433071/"
+    },
+    {
+      "source": "PC",
+      "title": "סטארט-אפים מנסים לשנות את אופי הטיפול בטראומה הלאומית",
+      "date": "Dec 2024",
+      "image": "assets/press/pc-event.jpg",
+      "url": "https://www.pc.co.il/news/420699/"
+    },
+    {
+      "source": "Geektime",
+      "title": "חממת חדשנות חדשה נפתחה בשדרות",
+      "date": "Jul 2025",
+      "url": "https://www.geektime.co.il/flash/sderot-new-entrepreneurship-program/"
+    },
+    {
+      "source": "Bizportal",
+      "title": "סטארטאפיסטים מהדרום חוברים לטבע במאמצים לטפל בטראומה",
+      "date": "Jun 2025",
+      "url": "https://www.bizportal.co.il/investment_conference/news/article/20017990"
+    },
+    {
+      "source": "News08",
+      "title": "עלייה חדה בפניות לטיפול נפשי בשדרות",
+      "date": "May 2025",
+      "url": "https://www.news08.net/%D7%A2%D7%9C%D7%99%D7%99%D7%94-%D7%97%D7%93%D7%94-%D7%91%D7%A4%D7%A0%D7%99%D7%95%D7%AA-%D7%9C%D7%98%D7%99%D7%A4%D7%95%D7%9C-%D7%A0%D7%A4%D7%A9%D7%99-%D7%91%D7%A9%D7%93%D7%A8%D7%95%D7%AA/"
+    },
+    {
+      "source": "News08",
+      "title": "מנהלת תקומה: שדרות כמרכז עולמי לחדשנות בחוסן ובריאות",
+      "date": "May 2025",
+      "url": "https://www.news08.net/%D7%9E%D7%A0%D7%94%D7%9C%D7%AA-%D7%AA%D7%A7%D7%95%D7%9E%D7%94-%D7%A9%D7%93%D7%A8%D7%95%D7%AA-%D7%9B%D7%9E%D7%A8%D7%9B%D7%96-%D7%A2%D7%95%D7%9C%D7%9E%D7%99-%D7%9C%D7%97%D7%93%D7%A9%D7%A0%D7%95%D7%AA/"
+    },
+    {
+      "source": "Israel Hayom",
+      "title": "מעבדה חיה לפיתוח טכנולוגיות חוסן",
       "date": "",
-      "url": ""
+      "url": "https://www.israelhayom.co.il/tech/tech-news/article/18386831"
+    },
+    {
+      "source": "News08",
+      "title": "בשדרות מקדמים טכנולוגיות לטיפול בטראומה",
+      "date": "Sep 2024",
+      "url": "https://www.news08.net/%D7%91%D7%A9%D7%93%D7%A8%D7%95%D7%AA-%D7%9E%D7%A7%D7%93%D7%9E%D7%99%D7%9D-%D7%98%D7%9B%D7%A0%D7%95%D7%9C%D7%95%D7%92%D7%99%D7%95%D7%AA-%D7%9C%D7%98%D7%99%D7%A4%D7%95%D7%9C-%D7%91%D7%98%D7%A8%D7%90/"
+    },
+    {
+      "source": "News1",
+      "title": "מנוע לעתיד",
+      "date": "",
+      "url": "https://m.news1.co.il/Archive/0026-D-172246-00.html?AfterBan=1"
     }
   ]
 }

@@ -70,7 +70,7 @@ h2.headline .accent{color:var(--teal-deep)}
 .team-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:36px 20px;max-width:1280px;margin:0 auto}
 .person{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;background:transparent;border:0;box-shadow:none;transition:transform .35s}
 .person:hover{transform:translateY(-6px)}
-.person .photo{position:relative;width:100%;max-width:178px;aspect-ratio:1;border-radius:50%;overflow:hidden;border:2px solid var(--ink-dark);box-shadow:0 14px 30px -18px rgba(13,36,54,.34);transition:box-shadow .35s, border-color .35s}
+.person .photo{position:relative;width:100%;max-width:178px;aspect-ratio:1;border-radius:50%;overflow:hidden;border:2px solid #24405A;box-shadow:0 14px 30px -18px rgba(13,36,54,.34);transition:box-shadow .35s, border-color .35s}
 .person:hover .photo{box-shadow:0 22px 44px -20px rgba(13,36,54,.5);border-color:var(--teal-deep)}
 .person .pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 26%;z-index:1;filter:grayscale(0.1) saturate(1.02);transition:filter 0.3s ease}
 .person:hover .pimg{filter:grayscale(0) saturate(1.1)}
@@ -86,6 +86,13 @@ h2.headline .accent{color:var(--teal-deep)}
   .team-tabs::-webkit-scrollbar{display:none}
   .team-tab{padding:11px 16px;font-size:11.5px;letter-spacing:.6px;white-space:nowrap}
   .team-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:28px 16px}
+  /* tighten the tall desktop banner + content padding for phones */
+  .hero-banner{padding:84px 6vw 40px}
+  h2.headline{font-size:clamp(27px,7.2vw,40px)}
+  .section-head{margin-bottom:36px}
+  .section-head.center .right{font-size:15.5px}
+  .team-content{padding:32px 6vw 72px}
+  .team-tabs{margin-bottom:36px}
 }
 </style>
 </head>
