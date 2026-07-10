@@ -100,7 +100,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 /* ── MODAL ── */
 .modal-back{position:fixed;inset:0;z-index:100;background:rgba(3,11,20,.78);backdrop-filter:blur(8px);display:grid;place-items:center;padding:24px;opacity:0;visibility:hidden;transition:.25s}
 .modal-back.open{opacity:1;visibility:visible}
-.modal-card{position:relative;max-width:540px;width:100%;padding:42px;border-radius:22px;background:linear-gradient(160deg, var(--bg-1), var(--bg-2));border:1px solid var(--line);box-shadow:0 50px 100px -30px rgba(0,0,0,.7);text-align:center;transform:translateY(20px) scale(.96);transition:.3s;color:#fff}
+.modal-card{position:relative;max-width:540px;width:100%;padding:42px;border-radius:22px;overflow:hidden;background:linear-gradient(160deg, var(--bg-1), var(--bg-2));border:1px solid var(--line);box-shadow:0 50px 100px -30px rgba(0,0,0,.7);text-align:center;transform:translateY(20px) scale(.96);transition:.3s;color:#fff}
 .modal-back.open .modal-card{transform:translateY(0) scale(1)}
 .modal-card::before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 0%, rgba(0,116,181,.30), transparent 60%);pointer-events:none}
 .modal-card > *{position:relative;z-index:2}
