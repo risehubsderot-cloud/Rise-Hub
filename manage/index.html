@@ -110,7 +110,10 @@ input,textarea,select{font-family:inherit;font-size:15px;color:var(--ink)}
 <div id="appView">
   <div class="topbar">
     <div class="brand"><span class="dot"></span> ניהול האתר — RISE.HUB</div>
-    <div class="note">כל שמירה מתפרסמת לאתר תוך כ-2 דקות</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span class="note">כל שמירה מתפרסמת לאתר תוך כ-2 דקות</span>
+      <button onclick="logout()" style="background:rgba(255,255,255,.12);color:#fff;font-weight:600;font-size:13px;padding:8px 16px;border-radius:999px">יציאה</button>
+    </div>
   </div>
 
   <div class="wrap">
@@ -151,7 +154,7 @@ const HINTS = {
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function toast(msg,cls){const t=document.getElementById('toast');t.textContent=msg;t.className='show '+(cls||'');setTimeout(()=>t.className='',3800)}
-function pw(){ return sessionStorage.getItem('adminKey') || '' }
+function pw(){ return localStorage.getItem('adminKey') || '' }
 
 async function api(query, body){
   const opt = body
@@ -167,14 +170,14 @@ async function login(){
   const v = document.getElementById('pwInput').value.trim();
   const errEl = document.getElementById('loginErr');
   if(!v){ errEl.textContent='נא להזין סיסמה'; return; }
-  sessionStorage.setItem('adminKey', v);
+  localStorage.setItem('adminKey', v);
   errEl.textContent='בודק…';
   try{
     await loadAll();
     document.getElementById('loginView').style.display='none';
     document.getElementById('appView').style.display='block';
   }catch(e){
-    sessionStorage.removeItem('adminKey');
+    localStorage.removeItem('adminKey');
     errEl.textContent = e.message==='סיסמה שגויה' ? 'סיסמה שגויה — נסו שוב' : 'שגיאה: '+e.message;
   }
 }
@@ -340,6 +343,8 @@ async function saveForm(){
 
 function closeForm(){document.getElementById('overlay').classList.remove('show')}
 
+function logout(){ localStorage.removeItem('adminKey'); location.reload(); }
+
 async function persist(msg){
   try{
     const key = tab==='news' ? 'news' : 'events';
@@ -357,7 +362,7 @@ async function persist(msg){
 
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeForm()});
 // auto-login if a key is already in this browser session
-if(pw()){ (async()=>{ try{ await loadAll(); document.getElementById('loginView').style.display='none'; document.getElementById('appView').style.display='block'; }catch(e){ sessionStorage.removeItem('adminKey'); } })(); }
+if(pw()){ (async()=>{ try{ await loadAll(); document.getElementById('loginView').style.display='none'; document.getElementById('appView').style.display='block'; }catch(e){ localStorage.removeItem('adminKey'); } })(); }
 </script>
 </body>
 </html>
