@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ניהול האתר · RISE.HUB</title>
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F6F9;--card:#fff;--ink:#0D2436;--mid:#3F546A;--line:rgba(13,36,54,.1);
+  --teal:#00588B;--teal-2:#0074B5;--sky:#38B6FF;--ok:#0E9F6E;--danger:#D64545;--gold:#A6ECFF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:0}
+input,textarea,select{font-family:inherit;font-size:15px;color:var(--ink)}
+
+/* login */
+#loginView{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#051221;padding:20px}
+.login-card{background:#fff;border-radius:20px;padding:40px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 40px 90px -30px rgba(0,0,0,.6)}
+.login-card h1{font-size:22px;font-weight:900;margin:14px 0 6px}
+.login-card p{color:var(--mid);font-size:14px;margin-bottom:22px}
+.login-card input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:11px;outline:none;text-align:center;font-size:16px}
+.login-card input:focus{border-color:var(--teal-2)}
+.login-card button{width:100%;margin-top:14px;padding:13px;border-radius:11px;background:var(--teal);color:#fff;font-weight:800;font-size:16px;transition:.15s}
+.login-card button:hover{background:var(--teal-2)}
+.login-card .err{color:var(--danger);font-size:13.5px;margin-top:12px;min-height:18px;font-weight:600}
+.login-card .logo-dot{width:44px;height:44px;border-radius:50%;background:linear-gradient(150deg,var(--teal),#051221);margin:0 auto;display:grid;place-items:center;color:var(--sky);font-weight:900;font-size:18px}
+
+#appView{display:none}
+.topbar{background:#051221;color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:50}
+.topbar .brand{font-weight:900;font-size:18px;display:flex;align-items:center;gap:10px}
+.topbar .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--sky)}
+.topbar .note{font-size:12.5px;color:#D6E2EE}
+
+.wrap{max-width:880px;margin:0 auto;padding:28px 20px 80px}
+.tabs{display:flex;gap:8px;margin-bottom:22px}
+.tab{padding:11px 26px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:700;font-size:15px;color:var(--mid);transition:.15s}
+.tab.active{background:var(--teal);border-color:var(--teal);color:#fff}
+
+.hint{background:#E8F4FD;border:1px solid rgba(0,116,181,.25);border-radius:12px;padding:14px 18px;font-size:14px;line-height:1.7;margin-bottom:22px}
+.hint b{color:var(--teal)}
+
+.add-btn{width:100%;padding:16px;border:2px dashed rgba(0,116,181,.4);border-radius:14px;background:rgba(0,116,181,.04);color:var(--teal);font-weight:800;font-size:16px;margin-bottom:18px;transition:.15s}
+.add-btn:hover{background:rgba(0,116,181,.09)}
+
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 14px -8px rgba(13,36,54,.08)}
+.item .thumb{width:74px;height:52px;border-radius:8px;object-fit:cover;background:linear-gradient(150deg,#00588B,#0D2436);flex-shrink:0}
+.item .info{flex:1;min-width:0}
+.item .info .t{font-weight:700;font-size:15.5px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.item .info .m{font-size:12.5px;color:var(--mid);margin-top:4px}
+.item .acts{display:flex;gap:8px;flex-shrink:0}
+.item .acts button{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--bg);color:var(--mid);transition:.15s}
+.item .acts button:hover{background:var(--teal);color:#fff}
+.item .acts button.del:hover{background:var(--danger)}
+.empty{text-align:center;padding:36px;color:var(--mid);font-size:15px}
+.grp{margin:26px 0 10px;font-weight:800;font-size:17px;color:var(--teal)}
+
+.overlay{position:fixed;inset:0;background:rgba(5,18,33,.55);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:100;overflow:auto}
+.overlay.show{display:flex}
+.modal{background:#fff;border-radius:18px;max-width:560px;width:100%;padding:28px;box-shadow:0 40px 80px -30px rgba(5,18,33,.5)}
+.modal h2{font-size:20px;font-weight:800;margin-bottom:20px}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}
+.field .sub{font-weight:400;color:var(--mid);font-size:12.5px}
+.field input[type=text],.field input[type=url],.field input[type=month],.field input[type=date],.field textarea,.field select{
+  width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;outline:none;transition:border .15s;background:#fff}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--teal-2)}
+.field textarea{min-height:84px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.imgdrop{border:2px dashed var(--line);border-radius:12px;padding:14px;text-align:center;color:var(--mid);font-size:14px;cursor:pointer;transition:.15s;position:relative}
+.imgdrop:hover{border-color:var(--teal-2);color:var(--teal)}
+.imgdrop img{max-width:100%;max-height:140px;border-radius:8px;display:block;margin:0 auto 8px}
+.imgdrop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.modal .btns{display:flex;gap:10px;margin-top:24px}
+.btn-primary{flex:1;padding:13px;border-radius:11px;background:var(--teal);color:#fff;font-weight:800;font-size:15.5px;transition:.15s}
+.btn-primary:hover{background:var(--teal-2)}
+.btn-primary:disabled{opacity:.6;cursor:wait}
+.btn-ghost{padding:13px 22px;border-radius:11px;background:var(--bg);color:var(--mid);font-weight:700}
+
+#toast{position:fixed;bottom:26px;right:50%;transform:translateX(50%);background:#0D2436;color:#fff;padding:14px 26px;border-radius:12px;font-weight:600;font-size:14.5px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200;max-width:90vw;text-align:center}
+#toast.show{opacity:1}
+#toast.ok{background:var(--ok)}
+#toast.err{background:var(--danger)}
+
+@media(max-width:560px){
+  .row2{grid-template-columns:1fr}
+  .topbar{padding:12px 16px;flex-wrap:wrap}
+  .item{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginView">
+  <div class="login-card">
+    <div class="logo-dot">R</div>
+    <h1>ניהול האתר</h1>
+    <p>הזינו את סיסמת הניהול כדי להמשיך</p>
+    <input type="password" id="pwInput" placeholder="סיסמה" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">כניסה</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="appView">
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span> ניהול האתר — RISE.HUB</div>
+    <div class="note">כל שמירה מתפרסמת לאתר תוך כ-2 דקות</div>
+  </div>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab active" data-tab="news" onclick="switchTab('news')">📰 חדשות ועיתונות</button>
+      <button class="tab" data-tab="events" onclick="switchTab('events')">📅 אירועים</button>
+    </div>
+    <div class="hint" id="hintBox"></div>
+    <button class="add-btn" id="addBtn" onclick="openForm()"></button>
+    <div id="listArea"><div class="empty">טוען…</div></div>
+  </div>
+</div>
+
+<!-- modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2 id="formTitle"></h2>
+    <div id="formFields"></div>
+    <div class="btns">
+      <button class="btn-primary" id="saveBtn" onclick="saveForm()">שמירה ופרסום</button>
+      <button class="btn-ghost" onclick="closeForm()">ביטול</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+let tab = 'news';
+let store = { news:null, events:null };
+let shas  = { news:null, events:null };
+let editCtx = null;
+const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const HINTS = {
+  news: 'כאן מנהלים את עמוד <b>החדשות והעיתונות</b>. כתבות עם תמונה מוצגות גדול למעלה; בלי תמונה — ברשימת "עוד בתקשורת". כל שמירה מתפרסמת לאתר אוטומטית.',
+  events: 'כאן מנהלים את עמוד <b>האירועים</b>. אירוע חדש נכנס ל"קרובים"; כשהאירוע עבר, עורכים אותו ומעבירים ל"אחרונים".'
+};
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function toast(msg,cls){const t=document.getElementById('toast');t.textContent=msg;t.className='show '+(cls||'');setTimeout(()=>t.className='',3800)}
+function pw(){ return sessionStorage.getItem('adminKey') || '' }
+
+async function api(query, body){
+  const opt = body
+    ? {method:'POST',headers:{'Content-Type':'application/json','x-admin-key':pw()},body:JSON.stringify(body)}
+    : {headers:{'x-admin-key':pw()}};
+  const r = await fetch('/api/manage'+(query||''), opt);
+  const j = await r.json().catch(()=>({error:'שגיאת שרת'}));
+  if(!r.ok) throw new Error(j.error||('שגיאה '+r.status));
+  return j;
+}
+
+async function login(){
+  const v = document.getElementById('pwInput').value.trim();
+  const errEl = document.getElementById('loginErr');
+  if(!v){ errEl.textContent='נא להזין סיסמה'; return; }
+  sessionStorage.setItem('adminKey', v);
+  errEl.textContent='בודק…';
+  try{
+    await loadAll();
+    document.getElementById('loginView').style.display='none';
+    document.getElementById('appView').style.display='block';
+  }catch(e){
+    sessionStorage.removeItem('adminKey');
+    errEl.textContent = e.message==='סיסמה שגויה' ? 'סיסמה שגויה — נסו שוב' : 'שגיאה: '+e.message;
+  }
+}
+
+async function loadAll(){
+  const [n,e] = await Promise.all([api('?file=news'), api('?file=events')]);
+  store.news = n.data.items ? n.data : {items:[]};   shas.news = n.sha;
+  store.events = (e.data.upcoming||e.data.recent) ? e.data : {upcoming:[],recent:[]}; shas.events = e.sha;
+  render();
+}
+
+function switchTab(t){
+  tab=t;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  render();
+}
+
+function render(){
+  document.getElementById('hintBox').innerHTML = HINTS[tab];
+  document.getElementById('addBtn').textContent = tab==='news' ? '+ הוספת כתבה חדשה' : '+ הוספת אירוע חדש';
+  const area = document.getElementById('listArea');
+  if(tab==='news'){
+    const items = store.news.items||[];
+    area.innerHTML = items.length ? items.map((n,i)=>itemRow({
+      img:n.image, title:n.title, meta:[n.source,n.date].filter(Boolean).join(' · '), group:'items', index:i
+    })).join('') : '<div class="empty">אין עדיין כתבות</div>';
+  } else {
+    const g = (name,label)=> `<div class="grp">${label}</div>` + ((store.events[name]||[]).length
+      ? store.events[name].map((e,i)=>itemRow({
+          img:e.image, title:e.title, meta:[e.pill,(e.day&&e.monthYear)?e.day+' '+e.monthYear:'',e.city].filter(Boolean).join(' · '),
+          group:name, index:i
+        })).join('')
+      : '<div class="empty">אין אירועים ברשימה זו</div>');
+    area.innerHTML = g('upcoming','אירועים קרובים') + g('recent','אירועים אחרונים');
+  }
+}
+
+function itemRow(o){
+  const img = o.img ? `<img class="thumb" src="/${esc(o.img)}" onerror="this.style.visibility='hidden'">` : `<div class="thumb"></div>`;
+  return `<div class="item">${img}
+    <div class="info"><div class="t">${esc(o.title)||'(ללא כותרת)'}</div><div class="m">${esc(o.meta)}</div></div>
+    <div class="acts">
+      <button title="עריכה" onclick="openForm('${o.group}',${o.index})">✏️</button>
+      <button class="del" title="מחיקה" onclick="delItem('${o.group}',${o.index})">🗑️</button>
+    </div></div>`;
+}
+
+async function delItem(group,index){
+  const arr = tab==='news' ? store.news.items : store.events[group];
+  if(!confirm('למחוק את "'+(arr[index].title||'')+'"? המחיקה תתפרסם לאתר.')) return;
+  arr.splice(index,1);
+  await persist('מחיקת פריט');
+}
+
+function field(label,sub,inner){return `<div class="field"><label>${label} ${sub?`<span class="sub">— ${sub}</span>`:''}</label>${inner}</div>`}
+
+function openForm(group,index){
+  editCtx = {group: group ?? (tab==='news'?'items':'upcoming'), index: index ?? -1};
+  const isNew = editCtx.index === -1;
+  const f = document.getElementById('formFields');
+  document.getElementById('formTitle').textContent = (isNew?'הוספת ':'עריכת ') + (tab==='news'?'כתבה':'אירוע');
+
+  if(tab==='news'){
+    const n = isNew ? {} : store.news.items[editCtx.index];
+    f.innerHTML =
+      field('כותרת הכתבה','', `<input type="text" id="f_title" value="${esc(n.title)}" placeholder="לדוגמה: מאיץ הסטארט-אפים משדרות שבונה חוסן">`)+
+      `<div class="row2">`+
+      field('שם העיתון','', `<input type="text" id="f_source" value="${esc(n.source)}" placeholder="לדוגמה: Calcalist">`)+
+      field('תאריך הכתבה','', `<input type="month" id="f_month" value="${monthToInput(n.date)}">`)+
+      `</div>`+
+      field('קישור לכתבה','הדביקו את הכתובת מהדפדפן', `<input type="url" id="f_url" value="${esc(n.url)}" placeholder="https://..." dir="ltr">`)+
+      field('תמונה','לא חובה. כתבה עם תמונה מוצגת גדול למעלה', imgDrop(n.image));
+  } else {
+    const e = isNew ? {} : store.events[editCtx.group][editCtx.index];
+    f.innerHTML =
+      field('שם האירוע','', `<input type="text" id="f_title" value="${esc(e.title)}" placeholder="לדוגמה: כנס טכנולוגיות חוסן 2026">`)+
+      field('תיאור קצר','משפט או שניים', `<textarea id="f_desc" placeholder="מה יקרה באירוע, למי הוא מיועד...">${esc(e.desc)}</textarea>`)+
+      `<div class="row2">`+
+      field('תאריך','', `<input type="date" id="f_date" value="${dayToInput(e)}">`)+
+      field('עיר / מקום','', `<input type="text" id="f_city" value="${esc(e.city)}" placeholder="לדוגמה: שדרות">`)+
+      `</div>`+
+      `<div class="row2">`+
+      field('סוג האירוע','', `<input type="text" id="f_pill" value="${esc(e.pill)}" placeholder="לדוגמה: כנס / סדנה / מפגש">`)+
+      field('רשימה','', `<select id="f_group">
+        <option value="upcoming" ${editCtx.group==='upcoming'?'selected':''}>קרובים</option>
+        <option value="recent" ${editCtx.group==='recent'?'selected':''}>אחרונים</option></select>`)+
+      `</div>`+
+      field('תמונה','לא חובה', imgDrop(e.image));
+  }
+  document.getElementById('overlay').classList.add('show');
+}
+
+function imgDrop(current){
+  return `<div class="imgdrop" id="imgDrop">
+    ${current?`<img src="/${esc(current)}" id="imgPreview">`:`<img id="imgPreview" style="display:none">`}
+    <span id="imgLabel">${current?'לחצו להחלפת התמונה':'לחצו לבחירת תמונה מהמחשב'}</span>
+    <input type="file" accept="image/*" onchange="pickImage(this)">
+    <input type="hidden" id="f_image" value="${esc(current)}">
+  </div>`;
+}
+
+async function pickImage(input){
+  const file = input.files[0];
+  if(!file) return;
+  if(file.size > 4_000_000){ toast('התמונה גדולה מדי — עד 4MB','err'); return; }
+  document.getElementById('imgLabel').textContent = 'מעלה תמונה...';
+  const b64 = await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.readAsDataURL(file)});
+  try{
+    const j = await api('',{action:'upload', name:file.name, base64:b64});
+    document.getElementById('f_image').value = j.path;
+    const p = document.getElementById('imgPreview');
+    p.src = '/'+j.path; p.style.display='block';
+    document.getElementById('imgLabel').textContent = 'לחצו להחלפת התמונה';
+  }catch(err){
+    toast('העלאת התמונה נכשלה: '+err.message,'err');
+    document.getElementById('imgLabel').textContent = 'לחצו לבחירת תמונה מהמחשב';
+  }
+}
+
+function monthToInput(d){
+  if(!d) return '';
+  const m = MONTHS_EN.findIndex(x=>String(d).startsWith(x));
+  const y = (String(d).match(/\d{4}/)||[])[0];
+  return (m>=0&&y) ? `${y}-${String(m+1).padStart(2,'0')}` : '';
+}
+function inputToMonth(v){
+  if(!v) return '';
+  const [y,m] = v.split('-');
+  return MONTHS_EN[+m-1]+' '+y;
+}
+function dayToInput(e){
+  if(!e||!e.day||!e.monthYear) return '';
+  const parts = String(e.monthYear).trim().split(/\s+/);
+  const m = MONTHS_EN.findIndex(x=>x.toUpperCase()===String(parts[0]).toUpperCase().slice(0,3));
+  return (m>=0&&parts[1]) ? `${parts[1]}-${String(m+1).padStart(2,'0')}-${String(e.day).padStart(2,'0')}` : '';
+}
+function val(id){const el=document.getElementById(id);return el?el.value.trim():''}
+
+async function saveForm(){
+  if(!val('f_title')) return toast('חסרה כותרת','err');
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'שומר…';
+
+  if(tab==='news'){
+    const item = { source:val('f_source'), title:val('f_title'), date:inputToMonth(val('f_month')), url:val('f_url') };
+    const img = val('f_image'); if(img) item.image = img;
+    if(editCtx.index===-1) store.news.items.unshift(item);
+    else store.news.items[editCtx.index] = item;
+  } else {
+    const d = val('f_date');
+    let day='', monthYear='';
+    if(d){const [y,m,dd]=d.split('-'); day=String(+dd); monthYear=MONTHS_EN[+m-1].toUpperCase()+' '+y;}
+    const item = { title:val('f_title'), desc:val('f_desc'), day, monthYear, pill:val('f_pill'), city:val('f_city') };
+    const img = val('f_image'); if(img) item.image = img;
+    const newGroup = val('f_group');
+    if(editCtx.index===-1) store.events[newGroup].unshift(item);
+    else{ store.events[editCtx.group].splice(editCtx.index,1); store.events[newGroup].unshift(item); }
+  }
+  const ok = await persist(editCtx.index===-1?'הוספת פריט':'עריכת פריט');
+  btn.disabled = false; btn.textContent = 'שמירה ופרסום';
+  if(ok) closeForm();
+}
+
+function closeForm(){document.getElementById('overlay').classList.remove('show')}
+
+async function persist(msg){
+  try{
+    const key = tab==='news' ? 'news' : 'events';
+    const j = await api('',{action:'save', file:key, data:store[key], sha:shas[key], message:msg+' — ממשק הניהול'});
+    shas[key] = j.sha;
+    render();
+    toast('נשמר ופורסם ✓ האתר יתעדכן תוך כ-2 דקות','ok');
+    return true;
+  }catch(err){
+    toast('השמירה נכשלה: '+err.message,'err');
+    if(String(err.message).includes('השתנה בינתיים')) await loadAll().catch(()=>{});
+    return false;
+  }
+}
+
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeForm()});
+// auto-login if a key is already in this browser session
+if(pw()){ (async()=>{ try{ await loadAll(); document.getElementById('loginView').style.display='none'; document.getElementById('appView').style.display='block'; }catch(e){ sessionStorage.removeItem('adminKey'); } })(); }
+</script>
+</body>
+</html>

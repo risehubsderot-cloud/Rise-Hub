@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /manage/
+Disallow: /api/
 
 Sitemap: https://rise-hub-nine.vercel.app/sitemap.xml
