@@ -1,14 +1,4 @@
 {
-  "upcoming": [
-    {
-      "title": "כגעיכ",
-      "desc": "גענכמיעכיח879",
-      "day": "7",
-      "monthYear": "JUN 0066",
-      "pill": "כטחי",
-      "city": "65",
-      "image": "assets/uploads/2026-07-10-16-17-58-SleepyWake-launcher.png"
-    }
-  ],
+  "upcoming": [],
   "recent": []
 }
