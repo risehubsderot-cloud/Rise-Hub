@@ -49,7 +49,7 @@ export default async function handler(req, res) {
       const path = ALLOWED_FILES[key];
       if (!path) return res.status(400).json({ error: 'unknown file' });
       const r = await gh(`/repos/${REPO}/contents/${path}?ref=${BRANCH}`);
-      if (!r.ok) return res.status(502).json({ error: 'קריאה מ-GitHub נכשלה', detail: r.body.message });
+      if (!r.ok) return res.status(502).json({ error: `קריאה מ-GitHub נכשלה (${r.status}): ${r.body.message || 'ללא פרטים'}` });
       const data = JSON.parse(Buffer.from(r.body.content, 'base64').toString('utf-8'));
       return res.status(200).json({ data, sha: r.body.sha });
     }
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
         if (r.status === 409 || r.status === 422) {
           return res.status(409).json({ error: 'הקובץ השתנה בינתיים — רעננו את הדף ונסו שוב' });
         }
-        if (!r.ok) return res.status(502).json({ error: 'השמירה ל-GitHub נכשלה', detail: r.body.message });
+        if (!r.ok) return res.status(502).json({ error: `השמירה ל-GitHub נכשלה (${r.status}): ${r.body.message || 'ללא פרטים'}` });
         return res.status(200).json({ ok: true, sha: r.body.content && r.body.content.sha });
       }
 
@@ -93,7 +93,7 @@ export default async function handler(req, res) {
           method: 'PUT',
           body: JSON.stringify({ message: `העלאת תמונה: ${name}`, content: b64, branch: BRANCH }),
         });
-        if (!r.ok) return res.status(502).json({ error: 'העלאת התמונה נכשלה', detail: r.body.message });
+        if (!r.ok) return res.status(502).json({ error: `העלאת התמונה נכשלה (${r.status}): ${r.body.message || 'ללא פרטים'}` });
         return res.status(200).json({ ok: true, path });
       }
 
