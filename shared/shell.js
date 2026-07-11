@@ -163,11 +163,9 @@
   /* ---------- accessibility effect CSS (shared with section iframes) ---------- */
   var A11Y_CSS =
     ':focus-visible{outline:3px solid #38B6FF!important;outline-offset:2px!important}' +
-    'html.a11y-contrast{background:#000!important}' +
-    'html.a11y-contrast body{background:#000!important}' +
-    'html.a11y-contrast *:not(svg):not(path):not(img){background-color:transparent!important;color:#fff!important;border-color:#777!important;text-shadow:none!important;box-shadow:none!important;background-image:none!important}' +
-    'html.a11y-contrast a,html.a11y-contrast a *{color:#ff0!important}' +
-    'html.a11y-contrast button,html.a11y-contrast .btn-primary,html.a11y-contrast .a11y-tog.on{background:#ff0!important;color:#000!important}' +
+    /* non-destructive contrast boost — applied ONLY inside section iframes */
+    /* (a filter on the parent <html> would break the fixed nav; iframes have no fixed elements) */
+    'html.ih-frame.a11y-contrast{filter:contrast(1.42) saturate(1.12)}' +
     'html.a11y-links a{text-decoration:underline!important;outline:2px solid #ffbf00!important;outline-offset:1px}' +
     'html.a11y-readable,html.a11y-readable *{font-family:Arial,"Helvetica Neue",Helvetica,sans-serif!important;letter-spacing:.01em!important;line-height:1.65!important}' +
     'body.reduce-motion *,html.a11y-motion *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}';
@@ -355,6 +353,7 @@
       var st = doc.getElementById('ih-a11y-css');
       if (!st) { st = doc.createElement('style'); st.id = 'ih-a11y-css'; st.textContent = A11Y_CSS; (doc.head || doc.documentElement).appendChild(st); }
       var h = doc.documentElement, b = doc.body;
+      h.classList.add('ih-frame'); /* marks this as iframe content, so the contrast filter targets it (not the parent's fixed chrome) */
       h.classList.toggle('a11y-contrast', a11y.contrast);
       h.classList.toggle('a11y-links', a11y.links);
       h.classList.toggle('a11y-readable', a11y.readable);
