@@ -163,9 +163,6 @@
   /* ---------- accessibility effect CSS (shared with section iframes) ---------- */
   var A11Y_CSS =
     ':focus-visible{outline:3px solid #38B6FF!important;outline-offset:2px!important}' +
-    /* non-destructive contrast boost — applied ONLY inside section iframes */
-    /* (a filter on the parent <html> would break the fixed nav; iframes have no fixed elements) */
-    'html.ih-frame.a11y-contrast{filter:contrast(1.42) saturate(1.12)}' +
     'html.a11y-links a{text-decoration:underline!important;outline:2px solid #ffbf00!important;outline-offset:1px}' +
     'html.a11y-readable,html.a11y-readable *{font-family:Arial,"Helvetica Neue",Helvetica,sans-serif!important;letter-spacing:.01em!important;line-height:1.65!important}' +
     'body.reduce-motion *,html.a11y-motion *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}';
@@ -182,7 +179,6 @@
         '<div class="a11y-size"><button id="a11yMinus" aria-label="Decrease text size">A−</button>' +
         '<button id="a11yReset0" aria-label="Reset text size">A</button>' +
         '<button id="a11yPlus" aria-label="Increase text size">A+</button></div></div>' +
-      '<button class="a11y-tog" data-tog="contrast" aria-pressed="false"><span data-he="ניגודיות גבוהה">High contrast</span></button>' +
       '<button class="a11y-tog" data-tog="links" aria-pressed="false"><span data-he="הדגשת קישורים">Highlight links</span></button>' +
       '<button class="a11y-tog" data-tog="readable" aria-pressed="false"><span data-he="גופן קריא">Readable font</span></button>' +
       '<button class="a11y-tog" data-tog="motion" aria-pressed="false"><span data-he="עצירת אנימציות">Pause animations</span></button>' +
@@ -335,13 +331,12 @@
 
   /* ---------- accessibility panel ---------- */
   var A11Y_KEY = 'ihA11y';
-  var a11y = { font: 0, contrast: false, links: false, readable: false, motion: false };
+  var a11y = { font: 0, links: false, readable: false, motion: false };
   try { a11y = Object.assign(a11y, JSON.parse(localStorage.getItem(A11Y_KEY) || '{}')); } catch (e) {}
 
   function a11yZoomVal() { return a11y.font ? String(1 + a11y.font * 0.1) : ''; }
   function a11yApplyLocal() {
     var h = document.documentElement, b = document.body;
-    h.classList.toggle('a11y-contrast', a11y.contrast);
     h.classList.toggle('a11y-links', a11y.links);
     h.classList.toggle('a11y-readable', a11y.readable);
     h.classList.toggle('a11y-motion', a11y.motion);
@@ -358,8 +353,6 @@
       var st = doc.getElementById('ih-a11y-css');
       if (!st) { st = doc.createElement('style'); st.id = 'ih-a11y-css'; st.textContent = A11Y_CSS; (doc.head || doc.documentElement).appendChild(st); }
       var h = doc.documentElement, b = doc.body;
-      h.classList.add('ih-frame'); /* marks this as iframe content, so the contrast filter targets it (not the parent's fixed chrome) */
-      h.classList.toggle('a11y-contrast', a11y.contrast);
       h.classList.toggle('a11y-links', a11y.links);
       h.classList.toggle('a11y-readable', a11y.readable);
       h.classList.toggle('a11y-motion', a11y.motion);
@@ -401,7 +394,7 @@
     document.getElementById('a11yPlus').addEventListener('click', function () { a11y.font = Math.min(4, a11y.font + 1); a11yApply(); });
     document.getElementById('a11yMinus').addEventListener('click', function () { a11y.font = Math.max(-2, a11y.font - 1); a11yApply(); });
     document.getElementById('a11yReset0').addEventListener('click', function () { a11y.font = 0; a11yApply(); });
-    document.getElementById('a11yResetAll').addEventListener('click', function () { a11y = { font: 0, contrast: false, links: false, readable: false, motion: false }; a11yApply(); });
+    document.getElementById('a11yResetAll').addEventListener('click', function () { a11y = { font: 0, links: false, readable: false, motion: false }; a11yApply(); });
     a11yApply(false); /* apply stored prefs on load */
   }
 
