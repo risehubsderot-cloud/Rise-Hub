@@ -287,7 +287,7 @@
   addEventListener('message', function (e) {
     var d = e.data || {};
     if (d.t === 'ih:h') { var f = frames[d.id]; if (f && !f.hasAttribute('data-fixed')) f.style.height = d.h + 'px'; }
-    else if (d.t === 'ih:ready') { var fr = frames[d.id]; if (fr) { sendLangTo(fr); if (window.__a11yApplyFrame) window.__a11yApplyFrame(fr); if (visible.has(d.id)) { revealImages(fr); post(fr, { t: 'ih:enter' }); } } }
+    else if (d.t === 'ih:ready') { var fr = frames[d.id]; if (fr) { sendLangTo(fr); if (window.__a11yApplyFrame) window.__a11yApplyFrame(fr); if (visible.has(d.id)) post(fr, { t: 'ih:enter' }); } }
     else if (d.t === 'ih:key') { moveSection(d.key); }
     else if (d.t === 'ih:nav') {
       if (d.to.indexOf('.html') !== -1) {
@@ -301,19 +301,14 @@
   });
 
   /* ---------- enter/leave reveals ---------- */
-  /* lazy images inside auto-sized iframes don't always fire natively — when a
-     section scrolls into view, eagerly load its images so none are left blank */
-  function revealImages(f) {
-    try { var doc = f.contentDocument; if (!doc) return; doc.querySelectorAll('img[loading="lazy"]').forEach(function (im) { im.loading = 'eager'; }); } catch (e) {}
-  }
   var io = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) {
       var f = en.target.querySelector('iframe'); if (!f) return;
       var id = f.dataset.id;
-      if (en.isIntersecting) { revealImages(f); if (!visible.has(id)) { visible.add(id); post(f, { t: 'ih:enter' }); } }
+      if (en.isIntersecting) { if (!visible.has(id)) { visible.add(id); post(f, { t: 'ih:enter' }); } }
       else if (visible.has(id)) { visible.delete(id); post(f, { t: 'ih:leave' }); }
     });
-  }, { threshold: 0.01, rootMargin: '200px' });
+  }, { threshold: 0.01 });
   document.querySelectorAll('.screen').forEach(function (s) { io.observe(s); });
 
   /* ---------- nav scroll state ---------- */
