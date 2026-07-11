@@ -113,7 +113,6 @@
             '<a href="' + url('index.html') + '#ecosystem-bridge" aria-label="Watch our video" title="Watch our video"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.27 5 12 5 12 5s-6.27 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26.2 26.2 0 0 0 2 12a26.2 26.2 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.73 19 12 19 12 19s6.27 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26.2 26.2 0 0 0 22 12a26.2 26.2 0 0 0-.4-4.8M10 15V9l5.2 3-5.2 3Z"/></svg></a>' +
             '<a href="mailto:' + CONTACT.email + '" aria-label="Email us" title="Email us"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6L22 7"/></svg></a>' +
           '</div>' +
-          '<a class="foot-join" href="' + COMMUNITY + '" target="_blank" rel="noopener noreferrer" data-he="הצטרפו לקהילת ההאב ←">Join our community →</a>' +
         '</div>' +
         '<div class="foot-col">' +
           '<h5 data-he="ניווט">Explore</h5>' +
@@ -142,7 +141,6 @@
       '</div>' +
       '<div class="foot-bottom">' +
         '<span data-he="© 2026 Innovation Hub. כל הזכויות שמורות.">© 2026 Innovation Hub. All rights reserved.</span>' +
-        '<a class="foot-a11y" href="' + url('accessibility/index.html') + '" data-he="הצהרת נגישות">Accessibility statement</a>' +
         '<span class="credit" data-he-html="עוצב ופותח על ידי <b>Shilo Shvartz</b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b>">Designed &amp; developed by <b>Shilo Shvartz</b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b></span>' +
       '</div>' +
     '</footer>';
