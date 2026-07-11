@@ -139,6 +139,8 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .a11y-statement{display:block;text-align:center;margin-top:10px;font-size:13px;color:#00588B;text-decoration:underline;font-weight:600}
 .foot-a11y{color:inherit;text-decoration:underline;opacity:.85}
 .foot-a11y:hover{opacity:1}
+.foot-join{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:11px 20px;border-radius:999px;background:var(--teal);color:#fff;font-weight:700;font-size:14px;transition:background .2s,transform .2s;width:fit-content}
+.foot-join:hover{background:var(--teal-2);transform:translateY(-1px)}
 
 @media (max-width:1200px){
   .nav-links{display:none}

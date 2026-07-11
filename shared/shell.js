@@ -65,6 +65,7 @@
     accelerator: 'https://www.resilience-accelerator.com/',
     immediate: 'https://www.resiliencetechhub.org/blank-7'
   };
+  var COMMUNITY = 'https://airtable.com/appHB9IBY4SgouZXE/pagjtsdMuzaYRU6Ft/form';
   function extLink(href, label, he) {
     return '<a href="' + href + '" target="_blank" rel="noopener noreferrer"' + (he ? ' data-he="' + he + '"' : '') + '>' + label + '</a>';
   }
@@ -112,6 +113,7 @@
             '<a href="' + url('index.html') + '#ecosystem-bridge" aria-label="Watch our video" title="Watch our video"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.27 5 12 5 12 5s-6.27 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26.2 26.2 0 0 0 2 12a26.2 26.2 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.73 19 12 19 12 19s6.27 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26.2 26.2 0 0 0 22 12a26.2 26.2 0 0 0-.4-4.8M10 15V9l5.2 3-5.2 3Z"/></svg></a>' +
             '<a href="mailto:' + CONTACT.email + '" aria-label="Email us" title="Email us"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6L22 7"/></svg></a>' +
           '</div>' +
+          '<a class="foot-join" href="' + COMMUNITY + '" target="_blank" rel="noopener noreferrer" data-he="הצטרפו לקהילת ההאב ←">Join our community →</a>' +
         '</div>' +
         '<div class="foot-col">' +
           '<h5 data-he="ניווט">Explore</h5>' +
@@ -154,8 +156,9 @@
         '<h3 id="modalTitle" data-he-html="הצטרפו אלינו בעיצוב מחדש של עתיד <span class=&quot;b&quot;>חדשנות החוסן.</span>">Join us in redefining the future of <span class="b">resilience innovation.</span></h3>' +
         '<p data-he="אנחנו תמיד מחפשים אנשי מקצוע רפואיים, יזמים, שותפים ובעלי חזון שחולקים את המשימה שלנו. דברו איתנו. בואו נבנה יחד את מה שיבוא.">We\'re always looking for clinicians, founders, partners and visionaries who share our mission. Get in touch. Let\'s build what comes next together.</p>' +
         '<div class="row">' +
-          '<a class="btn-primary" data-action="close-modal" href="mailto:' + CONTACT.email + '?subject=RISE.HUB%20—%20Get%20in%20touch" data-he="דברו איתנו ←">Get in touch →</a>' +
-          '<a class="ghost-btn" href="' + CONTACT.linkedin + '" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center" data-he="התחברו בלינקדאין">Connect on LinkedIn</a>' +
+          '<a class="btn-primary" href="' + COMMUNITY + '" target="_blank" rel="noopener noreferrer" data-he="הצטרפו לקהילה ←">Join our community →</a>' +
+          '<a class="ghost-btn" data-action="close-modal" href="mailto:' + CONTACT.email + '?subject=RISE.HUB%20—%20Get%20in%20touch" data-he="דברו איתנו">Get in touch</a>' +
+          '<a class="ghost-btn" href="' + CONTACT.linkedin + '" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center" data-he="לינקדאין">LinkedIn</a>' +
         '</div>' +
       '</div>' +
     '</div>';
