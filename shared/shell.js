@@ -155,8 +155,7 @@
         '<p data-he="אנחנו תמיד מחפשים אנשי מקצוע רפואיים, יזמים, שותפים ובעלי חזון שחולקים את המשימה שלנו. דברו איתנו. בואו נבנה יחד את מה שיבוא.">We\'re always looking for clinicians, founders, partners and visionaries who share our mission. Get in touch. Let\'s build what comes next together.</p>' +
         '<div class="row">' +
           '<a class="btn-primary" href="' + COMMUNITY + '" target="_blank" rel="noopener noreferrer" data-he="הצטרפו לקהילה ←">Join our community →</a>' +
-          '<a class="ghost-btn" data-action="close-modal" href="mailto:' + CONTACT.email + '?subject=RISE.HUB%20—%20Get%20in%20touch" data-he="דברו איתנו">Get in touch</a>' +
-          '<a class="ghost-btn" href="' + CONTACT.linkedin + '" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center" data-he="לינקדאין">LinkedIn</a>' +
+          '<a class="ghost-btn" href="' + CONTACT.linkedin + '" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center" data-he="התחברו בלינקדאין">Connect on LinkedIn</a>' +
         '</div>' +
       '</div>' +
     '</div>';
