@@ -140,6 +140,7 @@
       '</div>' +
       '<div class="foot-bottom">' +
         '<span data-he="© 2026 Innovation Hub. כל הזכויות שמורות.">© 2026 Innovation Hub. All rights reserved.</span>' +
+        '<a class="foot-a11y" href="' + url('accessibility/index.html') + '" data-he="הצהרת נגישות">Accessibility statement</a>' +
         '<span class="credit" data-he-html="עוצב ופותח על ידי <b>Shilo Shvartz</b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b>">Designed &amp; developed by <b>Shilo Shvartz</b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b></span>' +
       '</div>' +
     '</footer>';
@@ -159,8 +160,40 @@
       '</div>' +
     '</div>';
 
+  /* ---------- accessibility effect CSS (shared with section iframes) ---------- */
+  var A11Y_CSS =
+    ':focus-visible{outline:3px solid #38B6FF!important;outline-offset:2px!important}' +
+    'html.a11y-contrast{background:#000!important}' +
+    'html.a11y-contrast body{background:#000!important}' +
+    'html.a11y-contrast *:not(svg):not(path):not(img){background-color:transparent!important;color:#fff!important;border-color:#777!important;text-shadow:none!important;box-shadow:none!important;background-image:none!important}' +
+    'html.a11y-contrast a,html.a11y-contrast a *{color:#ff0!important}' +
+    'html.a11y-contrast button,html.a11y-contrast .btn-primary,html.a11y-contrast .a11y-tog.on{background:#ff0!important;color:#000!important}' +
+    'html.a11y-links a{text-decoration:underline!important;outline:2px solid #ffbf00!important;outline-offset:1px}' +
+    'html.a11y-readable,html.a11y-readable *{font-family:Arial,"Helvetica Neue",Helvetica,sans-serif!important;letter-spacing:.01em!important;line-height:1.65!important}' +
+    'body.reduce-motion *,html.a11y-motion *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}';
+  (function () { var s = document.createElement('style'); s.id = 'ih-a11y-css'; s.textContent = A11Y_CSS; document.head.appendChild(s); })();
+
+  var a11yHTML =
+    '<button id="a11yBtn" class="a11y-btn" aria-label="Accessibility menu" aria-haspopup="dialog" aria-expanded="false" title="נגישות">' +
+      '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="3.6" r="2.1"/><path d="M20.5 8.4c-2.5.9-5.2 1.2-8.5 1.2s-6-.3-8.5-1.2l.5 2.1c1.9.7 3.8 1 5.8 1.1l-1.1 9.1 2.1.3 1.2-6.4h.5l1.2 6.4 2.1-.3-1.1-9.1c2-.1 3.9-.4 5.8-1.1l.5-2.1z"/></svg>' +
+    '</button>' +
+    '<div id="a11yPanel" class="a11y-panel" role="dialog" aria-modal="true" aria-labelledby="a11yTitle" hidden>' +
+      '<div class="a11y-head"><h2 id="a11yTitle" data-he="תפריט נגישות">Accessibility</h2>' +
+        '<button class="a11y-x" id="a11yClose" aria-label="Close accessibility menu">×</button></div>' +
+      '<div class="a11y-row"><span data-he="גודל טקסט">Text size</span>' +
+        '<div class="a11y-size"><button id="a11yMinus" aria-label="Decrease text size">A−</button>' +
+        '<button id="a11yReset0" aria-label="Reset text size">A</button>' +
+        '<button id="a11yPlus" aria-label="Increase text size">A+</button></div></div>' +
+      '<button class="a11y-tog" data-tog="contrast" aria-pressed="false"><span data-he="ניגודיות גבוהה">High contrast</span></button>' +
+      '<button class="a11y-tog" data-tog="links" aria-pressed="false"><span data-he="הדגשת קישורים">Highlight links</span></button>' +
+      '<button class="a11y-tog" data-tog="readable" aria-pressed="false"><span data-he="גופן קריא">Readable font</span></button>' +
+      '<button class="a11y-tog" data-tog="motion" aria-pressed="false"><span data-he="עצירת אנימציות">Pause animations</span></button>' +
+      '<button class="a11y-resetall" id="a11yResetAll" data-he="איפוס הכל">Reset all</button>' +
+      '<a class="a11y-statement" href="' + url('accessibility/index.html') + '" data-he="הצהרת נגישות">Accessibility statement</a>' +
+    '</div>';
+
   document.body.insertAdjacentHTML('afterbegin', navHTML + dotnavHTML);
-  document.body.insertAdjacentHTML('beforeend', footerHTML + modalHTML);
+  document.body.insertAdjacentHTML('beforeend', footerHTML + modalHTML + a11yHTML);
 
   /* ---------- language toggle ---------- */
   var langBtn = document.getElementById('langBtn');
@@ -260,7 +293,7 @@
   addEventListener('message', function (e) {
     var d = e.data || {};
     if (d.t === 'ih:h') { var f = frames[d.id]; if (f && !f.hasAttribute('data-fixed')) f.style.height = d.h + 'px'; }
-    else if (d.t === 'ih:ready') { var fr = frames[d.id]; if (fr) { sendLangTo(fr); if (visible.has(d.id)) post(fr, { t: 'ih:enter' }); } }
+    else if (d.t === 'ih:ready') { var fr = frames[d.id]; if (fr) { sendLangTo(fr); if (window.__a11yApplyFrame) window.__a11yApplyFrame(fr); if (visible.has(d.id)) post(fr, { t: 'ih:enter' }); } }
     else if (d.t === 'ih:key') { moveSection(d.key); }
     else if (d.t === 'ih:nav') {
       if (d.to.indexOf('.html') !== -1) {
@@ -296,6 +329,77 @@
   document.querySelectorAll('[data-action="close-modal"]').forEach(function (b) { b.addEventListener('click', closeModal); });
   modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
   addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  /* ---------- accessibility panel ---------- */
+  var A11Y_KEY = 'ihA11y';
+  var a11y = { font: 0, contrast: false, links: false, readable: false, motion: false };
+  try { a11y = Object.assign(a11y, JSON.parse(localStorage.getItem(A11Y_KEY) || '{}')); } catch (e) {}
+
+  function a11yZoomVal() { return a11y.font ? String(1 + a11y.font * 0.1) : ''; }
+  function a11yApplyLocal() {
+    var h = document.documentElement, b = document.body;
+    h.classList.toggle('a11y-contrast', a11y.contrast);
+    h.classList.toggle('a11y-links', a11y.links);
+    h.classList.toggle('a11y-readable', a11y.readable);
+    h.classList.toggle('a11y-motion', a11y.motion);
+    b.classList.toggle('reduce-motion', a11y.motion);
+    /* zoom only the parent chrome (not the html) so iframes aren't double-zoomed */
+    var z = a11yZoomVal();
+    [document.getElementById('nav'), document.querySelector('footer'), document.querySelector('.modal-card'), document.getElementById('dotnav')]
+      .forEach(function (el) { if (el) el.style.zoom = z; });
+  }
+  /* same-origin iframes: inject the a11y stylesheet + classes straight into each */
+  function a11yApplyToFrame(frame) {
+    try {
+      var doc = frame && frame.contentDocument; if (!doc || !doc.documentElement) return;
+      var st = doc.getElementById('ih-a11y-css');
+      if (!st) { st = doc.createElement('style'); st.id = 'ih-a11y-css'; st.textContent = A11Y_CSS; (doc.head || doc.documentElement).appendChild(st); }
+      var h = doc.documentElement, b = doc.body;
+      h.classList.toggle('a11y-contrast', a11y.contrast);
+      h.classList.toggle('a11y-links', a11y.links);
+      h.classList.toggle('a11y-readable', a11y.readable);
+      h.classList.toggle('a11y-motion', a11y.motion);
+      if (b) b.classList.toggle('reduce-motion', a11y.motion);
+      h.style.zoom = a11yZoomVal();
+    } catch (e) {}
+  }
+  window.__a11yApplyFrame = a11yApplyToFrame;
+  function a11yBroadcast() { Object.keys(frames).forEach(function (k) { a11yApplyToFrame(frames[k]); }); }
+  function a11ySyncUI() {
+    document.querySelectorAll('.a11y-tog').forEach(function (btn) {
+      var on = !!a11y[btn.dataset.tog];
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  function a11yApply(save) {
+    a11yApplyLocal(); a11yBroadcast(); a11ySyncUI();
+    if (save !== false) { try { localStorage.setItem(A11Y_KEY, JSON.stringify(a11y)); } catch (e) {} }
+  }
+
+  var a11yBtn = document.getElementById('a11yBtn');
+  var a11yPanel = document.getElementById('a11yPanel');
+  function a11yOpen(o) {
+    a11yPanel.hidden = !o;
+    a11yBtn.setAttribute('aria-expanded', o ? 'true' : 'false');
+    if (o) { var c = document.getElementById('a11yClose'); if (c) c.focus(); } else { a11yBtn.focus(); }
+  }
+  if (a11yBtn && a11yPanel) {
+    a11yBtn.addEventListener('click', function () { a11yOpen(a11yPanel.hidden); });
+    document.getElementById('a11yClose').addEventListener('click', function () { a11yOpen(false); });
+    addEventListener('keydown', function (e) { if (e.key === 'Escape' && !a11yPanel.hidden) a11yOpen(false); });
+    document.addEventListener('click', function (e) {
+      if (!a11yPanel.hidden && !a11yPanel.contains(e.target) && !a11yBtn.contains(e.target)) a11yOpen(false);
+    });
+    document.querySelectorAll('.a11y-tog').forEach(function (btn) {
+      btn.addEventListener('click', function () { a11y[btn.dataset.tog] = !a11y[btn.dataset.tog]; a11yApply(); });
+    });
+    document.getElementById('a11yPlus').addEventListener('click', function () { a11y.font = Math.min(4, a11y.font + 1); a11yApply(); });
+    document.getElementById('a11yMinus').addEventListener('click', function () { a11y.font = Math.max(-2, a11y.font - 1); a11yApply(); });
+    document.getElementById('a11yReset0').addEventListener('click', function () { a11y.font = 0; a11yApply(); });
+    document.getElementById('a11yResetAll').addEventListener('click', function () { a11y = { font: 0, contrast: false, links: false, readable: false, motion: false }; a11yApply(); });
+    a11yApply(false); /* apply stored prefs on load */
+  }
 
   /* ---------- side dot nav + arrow-key navigation ---------- */
   var els = SECTIONS.map(function (s) { return document.getElementById(s.id); });
