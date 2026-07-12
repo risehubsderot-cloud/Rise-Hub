@@ -174,10 +174,6 @@
     '<div id="a11yPanel" class="a11y-panel" role="dialog" aria-modal="true" aria-labelledby="a11yTitle" hidden>' +
       '<div class="a11y-head"><h2 id="a11yTitle" data-he="תפריט נגישות">Accessibility</h2>' +
         '<button class="a11y-x" id="a11yClose" aria-label="Close accessibility menu">×</button></div>' +
-      '<div class="a11y-row"><span data-he="גודל טקסט">Text size</span>' +
-        '<div class="a11y-size"><button id="a11yMinus" aria-label="Decrease text size">A−</button>' +
-        '<button id="a11yReset0" aria-label="Reset text size">A</button>' +
-        '<button id="a11yPlus" aria-label="Increase text size">A+</button></div></div>' +
       '<button class="a11y-tog" data-tog="links" aria-pressed="false"><span data-he="הדגשת קישורים">Highlight links</span></button>' +
       '<button class="a11y-tog" data-tog="readable" aria-pressed="false"><span data-he="גופן קריא">Readable font</span></button>' +
       '<button class="a11y-tog" data-tog="motion" aria-pressed="false"><span data-he="עצירת אנימציות">Pause animations</span></button>' +
@@ -325,20 +321,15 @@
 
   /* ---------- accessibility panel ---------- */
   var A11Y_KEY = 'ihA11y';
-  var a11y = { font: 0, links: false, readable: false, motion: false };
+  var a11y = { links: false, readable: false, motion: false };
   try { a11y = Object.assign(a11y, JSON.parse(localStorage.getItem(A11Y_KEY) || '{}')); } catch (e) {}
 
-  function a11yZoomVal() { return a11y.font ? String(1 + a11y.font * 0.1) : ''; }
   function a11yApplyLocal() {
     var h = document.documentElement, b = document.body;
     h.classList.toggle('a11y-links', a11y.links);
     h.classList.toggle('a11y-readable', a11y.readable);
     h.classList.toggle('a11y-motion', a11y.motion);
     b.classList.toggle('reduce-motion', a11y.motion);
-    /* zoom only the parent chrome (not the html) so iframes aren't double-zoomed */
-    var z = a11yZoomVal();
-    [document.getElementById('nav'), document.querySelector('footer'), document.querySelector('.modal-card'), document.getElementById('dotnav')]
-      .forEach(function (el) { if (el) el.style.zoom = z; });
   }
   /* same-origin iframes: inject the a11y stylesheet + classes straight into each */
   function a11yApplyToFrame(frame) {
@@ -351,7 +342,15 @@
       h.classList.toggle('a11y-readable', a11y.readable);
       h.classList.toggle('a11y-motion', a11y.motion);
       if (b) b.classList.toggle('reduce-motion', a11y.motion);
-      h.style.zoom = a11yZoomVal();
+      /* the readable font changes text height — nudge the frame to re-measure so
+         the iframe grows to fit (no zoom here, so there's no vh feedback loop) */
+      var win = frame.contentWindow;
+      if (win) {
+        try {
+          if (typeof win.__frameReport === 'function') win.__frameReport();
+          else if (win.dispatchEvent && win.Event) win.dispatchEvent(new win.Event('resize'));
+        } catch (e) {}
+      }
     } catch (e) {}
   }
   window.__a11yApplyFrame = a11yApplyToFrame;
@@ -385,10 +384,7 @@
     document.querySelectorAll('.a11y-tog').forEach(function (btn) {
       btn.addEventListener('click', function () { a11y[btn.dataset.tog] = !a11y[btn.dataset.tog]; a11yApply(); });
     });
-    document.getElementById('a11yPlus').addEventListener('click', function () { a11y.font = Math.min(4, a11y.font + 1); a11yApply(); });
-    document.getElementById('a11yMinus').addEventListener('click', function () { a11y.font = Math.max(-2, a11y.font - 1); a11yApply(); });
-    document.getElementById('a11yReset0').addEventListener('click', function () { a11y.font = 0; a11yApply(); });
-    document.getElementById('a11yResetAll').addEventListener('click', function () { a11y = { font: 0, links: false, readable: false, motion: false }; a11yApply(); });
+    document.getElementById('a11yResetAll').addEventListener('click', function () { a11y = { links: false, readable: false, motion: false }; a11yApply(); });
     a11yApply(false); /* apply stored prefs on load */
   }
 
