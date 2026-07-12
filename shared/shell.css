@@ -179,8 +179,10 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
   }
   .nav.menu-open .nav-cta-li > button:hover{background:var(--teal-2);color:#051221}
   /* Programs sub-menu: shown expanded inline instead of a hover pop-over */
-  .nav.menu-open .menu{
-    position:static;transform:none;opacity:1;visibility:visible;
+  .nav.menu-open .menu,
+  .nav.menu-open .nav-links > li:hover .menu,
+  .nav.menu-open .nav-links > li:focus-within .menu{
+    position:static;transform:none!important;opacity:1;visibility:visible;
     min-width:0;padding:2px 0 8px;margin:0;
     background:transparent;border:0;box-shadow:none;backdrop-filter:none;
   }
