@@ -140,7 +140,7 @@
       '</div>' +
       '<div class="foot-bottom">' +
         '<span data-he="© 2026 Innovation Hub. כל הזכויות שמורות.">© 2026 Innovation Hub. All rights reserved.</span>' +
-        '<span class="credit" data-he-html="עוצב ופותח על ידי <b>Shilo Shvartz</b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b>">Designed &amp; developed by <b>Shilo Shvartz</b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b></span>' +
+        '<span class="credit" data-he-html="עוצב ופותח על ידי <b><a href=&quot;https://www.linkedin.com/in/shilo-shvartz/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;credit-link&quot;>Shilo Shvartz</a></b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b>">Designed &amp; developed by <b><a href="https://www.linkedin.com/in/shilo-shvartz/" target="_blank" rel="noopener noreferrer" class="credit-link">Shilo Shvartz</a></b>, <b>Ori Asher</b>, <b>Shai Ozer</b>, <b>Yosef Ozeri</b></span>' +
       '</div>' +
     '</footer>';
 

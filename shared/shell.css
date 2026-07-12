@@ -93,6 +93,8 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .foot-bottom{max-width:1280px;margin:0 auto;padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;font-size:12.5px;color:var(--dim-2)}
 .foot-bottom .credit{opacity:.8}
 .foot-bottom .credit b{color:var(--ink-2);font-weight:600}
+.foot-bottom .credit-link{color:inherit;text-decoration:none;transition:color .2s}
+.foot-bottom .credit-link:hover{color:var(--teal-2);text-decoration:underline}
 .social{display:flex;gap:10px;margin-top:22px}
 .social a{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.05);display:grid;place-items:center;color:var(--ink-2);transition:.2s}
 .social a:hover{background:var(--teal);color:#fff}
