@@ -64,7 +64,7 @@
     shebaSderot: 'https://www.resiliencetechhub.org/sheba-sderot',
     accelerator: 'https://www.resilience-accelerator.com/',
     immediate: 'https://www.resiliencetechhub.org/blank-7',
-    meital: 'https://meital-site.netlify.app/about'
+    meital: 'https://meital-site.netlify.app/'
   };
   var COMMUNITY = 'https://airtable.com/appHB9IBY4SgouZXE/pagjtsdMuzaYRU6Ft/form';
   function extLink(href, label, he) {
