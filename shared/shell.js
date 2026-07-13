@@ -63,7 +63,8 @@
   var EXT = {
     shebaSderot: 'https://www.resiliencetechhub.org/sheba-sderot',
     accelerator: 'https://www.resilience-accelerator.com/',
-    immediate: 'https://www.resiliencetechhub.org/blank-7'
+    immediate: 'https://www.resiliencetechhub.org/blank-7',
+    meital: 'https://meital-site.netlify.app/about'
   };
   var COMMUNITY = 'https://airtable.com/appHB9IBY4SgouZXE/pagjtsdMuzaYRU6Ft/form';
   function extLink(href, label, he) {
@@ -84,6 +85,7 @@
             extLink(EXT.shebaSderot, 'Sheba to Sderot ↗', 'שיבא לשדרות ↗') +
             extLink(EXT.accelerator, 'Resilience Accelerator ↗', 'אקסלרטור החוסן ↗') +
             extLink(EXT.immediate, 'Immediate Implementation ↗', 'יישום מיידי ↗') +
+            extLink(EXT.meital, 'MEITAL Center ↗', 'מרכז מיט״ל ↗') +
           '</div>' +
         '</li>' +
         topLink('team', 'Team', 'צוות', 'team/index.html') +
